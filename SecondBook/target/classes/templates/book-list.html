@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+</head>
+<div th:switch="${books}">
+    <h2 th:case="null">No books found!</h2>
+    <div th:case="*">
+        <h2>Books</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.price}"></td>
+                <td><a th:href="@{book-update/{id}(id=${book.id})}">Edit</a></td>
+                <td><a th:href="@{book-delete/{id}(id=${book.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<p><a href="/book-create">Create book</a></p>
+</html>
