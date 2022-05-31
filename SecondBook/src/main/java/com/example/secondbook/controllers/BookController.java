@@ -5,9 +5,12 @@ import com.example.secondbook.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class BookController {
@@ -31,25 +34,29 @@ public class BookController {
     }
 
     @PostMapping("/book-create")
-    public String createNewBook(Book book) {
+    public String createNewBook(@Valid Book book, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "book-create";
+        }
         bookRepository.save(book);
         return "redirect:/get-books";
     }
 
     @GetMapping("/book-delete/{id}")
-    public String deleteBook(@PathVariable("id") int bookId){
+    public String deleteBook(@PathVariable("id") int bookId) {
         bookRepository.deleteById(bookId);
         return "redirect:/get-books";
     }
 
     @GetMapping("/book-update/{id}")
-    public String updateBook(@PathVariable("id") int id,Model model){
-        model.addAttribute("book",bookRepository.findById(id));
+    public String updateBook(@PathVariable("id") int id, Model model) {
+        model.addAttribute("book", bookRepository.findById(id));
         return "book-update";
     }
 
     @PostMapping("/book-update")
-    public String updateBook(Book book){
+    public String updateBook(Book book) {
         bookRepository.save(book);
         return "redirect:/get-books";
     }

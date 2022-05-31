@@ -6,13 +6,26 @@
 </head>
 <body>
 <form action="#" th:action="@{/book-create}" th:object="${book}" method="post">
-    <label for="title">Title</label>
-    <input type="text" th:field="*{title}" id="title" placeholder="Title">
-    <label for="author">Author</label>
-    <input type="text" th:field="*{author}" id="author" placeholder="Author">
-    <label for="price">Price</label>
-    <input type="text" th:field="*{price}" id="price" placeholder="Price">
-    <input type="submit" value="Create Book">
+    <table>
+        <tr>
+            <td><label for="title">Title</label></td>
+            <td><input type="text" th:field="*{title}" id="title" placeholder="Title"></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</td>
+        </tr>
+        <tr>
+            <td><label for="author">Author</label></td>
+            <td><input type="text" th:field="*{author}" id="author" placeholder="Author"></td>
+            <td th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author Error</td>
+        </tr>
+        <tr>
+            <td><label for="price">Price</label></td>
+            <td><input type="text" th:field="*{price}" id="price" placeholder="Price"></td>
+            <td th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Create Book"></td>
+        </tr>
+    </table>
 </form>
 </body>
 </html>

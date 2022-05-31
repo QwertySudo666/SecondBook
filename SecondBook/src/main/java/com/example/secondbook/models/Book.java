@@ -1,6 +1,9 @@
 package com.example.secondbook.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "books")
@@ -8,9 +11,17 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String author;
+
+    @NotNull
+    @Min(value = 0, message = "Price should be more than 0")
     private int price;
+
     private String description;
 
     public Book() {
