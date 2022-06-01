@@ -5,7 +5,9 @@
     <title>Book Create</title>
 </head>
 <body>
-<form action="#" th:action="@{/book-create}" th:object="${book}" method="post">
+<a href="/main-page">Main page</a>
+</br>
+<form action="#" th:action="@{/books/book-create}" th:object="${book}" method="post">
     <table>
         <tr>
             <td><label for="title">Title</label></td>

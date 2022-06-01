@@ -5,7 +5,9 @@
     <title>Book Update</title>
 </head>
 <body>
-<form action="#" th:action="@{/book-update}" th:object="${book}" method="post">
+<a href="/main-page">Main page</a>
+</br>
+<form action="#" th:action="@{/books/book-update}" th:object="${book}" method="post">
     <label for="id">ID</label>
     <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
     <br/>

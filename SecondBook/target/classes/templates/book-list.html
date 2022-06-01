@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Book List</title>
 </head>
+<a href="/main-page">Main page</a>
+</br>
 <div th:switch="${books}">
     <h2 th:case="null">No books found!</h2>
     <div th:case="*">
@@ -30,5 +32,5 @@
         </table>
     </div>
 </div>
-<p><a href="/book-create">Create book</a></p>
+<p><a href="/books/book-create">Create book</a></p>
 </html>

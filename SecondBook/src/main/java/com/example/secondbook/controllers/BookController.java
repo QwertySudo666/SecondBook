@@ -9,10 +9,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/books")
 public class BookController {
 
     private final BookRepository bookRepository;
@@ -40,13 +42,13 @@ public class BookController {
             return "book-create";
         }
         bookRepository.save(book);
-        return "redirect:/get-books";
+        return "redirect:/books/get-books";
     }
 
     @GetMapping("/book-delete/{id}")
     public String deleteBook(@PathVariable("id") int bookId) {
         bookRepository.deleteById(bookId);
-        return "redirect:/get-books";
+        return "redirect:/books/get-books";
     }
 
     @GetMapping("/book-update/{id}")
@@ -58,6 +60,6 @@ public class BookController {
     @PostMapping("/book-update")
     public String updateBook(Book book) {
         bookRepository.save(book);
-        return "redirect:/get-books";
+        return "redirect:/books/get-books";
     }
 }
