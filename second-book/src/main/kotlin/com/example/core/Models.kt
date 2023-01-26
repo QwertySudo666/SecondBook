@@ -1,11 +1,12 @@
 package com.example.core
 
-import java.util.*
+import kotlinx.serialization.Serializable
 
+@Serializable
 class Book(
     val id: String,
     val name: String,
-    val author: UUID,
+    val author: String,
     val genre: String, //should be enum
     val description: String,
     val price: Double

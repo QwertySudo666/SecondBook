@@ -10,7 +10,7 @@ import io.ktor.server.routing.*
 fun Route.bookRouting() {
     val database = Database()
     route("api/books") {
-        get("") {
+        get {
             call.respond(database.bookStorage)
         }
         get("{id}") {
@@ -22,7 +22,7 @@ fun Route.bookRouting() {
                 call.respond("No book with $id")
             }
         }
-        post("") {
+        post {
             val requestBook = call.receive<Book>()
             database.bookStorage.add(requestBook)
             call.respond("Saved")

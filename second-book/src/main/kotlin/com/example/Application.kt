@@ -6,12 +6,12 @@ import io.ktor.server.netty.*
 import com.example.plugins.*
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module, watchPaths = listOf("classes"))
         .start(wait = true)
 }
 
 fun Application.module() {
-    configureHTTP()
+//    configureHTTP()
     configureSerialization()
     configureRouting()
 }
