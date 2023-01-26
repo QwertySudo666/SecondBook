@@ -1,21 +1,21 @@
 package com.example.web.routes
 
 import com.example.core.Book
-import com.example.persistance.Database
+import com.example.core.facades.BookFacade
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.bookRouting() {
-    val database = Database()
+    val bookFacade = BookFacade()
     route("api/books") {
         get {
-            call.respond(database.bookStorage)
+            call.respond(bookFacade.fetchBooks())
         }
-        get("{id}") {
+        get("{id?}") {
             val id = call.parameters["id"]
-            val responseBook = database.bookStorage.find { it.id == id }
+            val responseBook = bookFacade.fetchBook(id!!)
             if (responseBook != null) {
                 call.respond(responseBook)
             } else {
@@ -24,19 +24,17 @@ fun Route.bookRouting() {
         }
         post {
             val requestBook = call.receive<Book>()
-            database.bookStorage.add(requestBook)
+            bookFacade.saveBook(requestBook)
             call.respond("Saved")
         }
-        put("{id}") {
-            val id = call.parameters["id"]
+        put {
             val updatedBook = call.receive<Book>()
-            database.bookStorage.removeIf { it.id == id }
-            database.bookStorage.add(updatedBook)
+            bookFacade.updateBook(updatedBook)
             call.respond("Updated")
         }
         delete("{id}") {
             val id = call.parameters["id"]
-            database.bookStorage.removeIf { it.id == id }
+            bookFacade.deleteBook(id)
             call.respond("Deleted")
         }
     }
