@@ -1,29 +1,38 @@
 package com.example.core.facades
 
 import com.example.core.Book
+import com.example.core.adapter.BookRepositoryAdapter
 import com.example.persistance.Database
+import com.example.persistance.adapter.PersistentBookRepositoryAdapter
+import kotlinx.coroutines.runBlocking
 
 class BookFacade {
     private val database = Database()
-
-    fun fetchBooks(): List<Book> {
-        return database.bookStorage
+    private val bookRepositoryAdapter: BookRepositoryAdapter = PersistentBookRepositoryAdapter().apply {
+        runBlocking {
+            if (allBooks().isEmpty()) {
+                addNewBook(Book("T", "T", "T", "T", "T", 0.0))
+            }
+        }
     }
 
-    fun fetchBook(id: String): Book? {
-        return database.bookStorage.find { it.id == id }
+    suspend fun fetchBooks(): List<Book> {
+        return bookRepositoryAdapter.allBooks()
     }
 
-    fun saveBook(requestBook: Book) {
-        database.bookStorage.add(requestBook)
+    suspend fun fetchBook(id: String): Book? {
+        return bookRepositoryAdapter.book(id)
     }
 
-    fun updateBook(updatedBook: Book) {
-        database.bookStorage.removeIf { it.id == updatedBook.id }
-        database.bookStorage.add(updatedBook)
+    suspend fun saveBook(requestBook: Book) {
+        bookRepositoryAdapter.addNewBook(requestBook)
     }
 
-    fun deleteBook(id: String?) {
-        database.bookStorage.removeIf { it.id == id }
+    suspend fun updateBook(updatedBook: Book) {
+        bookRepositoryAdapter.editBook(updatedBook)
+    }
+
+    suspend fun deleteBook(id: String) {
+        bookRepositoryAdapter.deleteBook(id)
     }
 }

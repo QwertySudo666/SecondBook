@@ -34,7 +34,7 @@ fun Route.bookRouting() {
         }
         delete("{id}") {
             val id = call.parameters["id"]
-            bookFacade.deleteBook(id)
+            bookFacade.deleteBook(id!!)
             call.respond("Deleted")
         }
     }
